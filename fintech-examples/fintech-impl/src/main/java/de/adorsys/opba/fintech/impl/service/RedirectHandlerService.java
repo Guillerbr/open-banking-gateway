@@ -4,6 +4,8 @@ import de.adorsys.opba.fintech.impl.database.entities.RedirectUrlsEntity;
 import de.adorsys.opba.fintech.impl.database.entities.RequestInfoEntity;
 import de.adorsys.opba.fintech.impl.database.entities.SessionEntity;
 import de.adorsys.opba.fintech.impl.database.repositories.RedirectUrlRepository;
+import de.adorsys.opba.tpp.token.api.model.generated.PsuConsentSession;
+import de.adorsys.opba.tpp.token.api.model.generated.PsuConsentSessionResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +40,7 @@ public class RedirectHandlerService {
     private final AccountService accountService;
     private final TransactionService transactionService;
     private final RequestInfoService requestInfoService;
+    private final TokenService tokenService;
 
     public RedirectUrlsEntity registerRedirectUrlForSession(String xsrfToken, String fintechRedirectURLOK, String fintechRedirectURLNOK) {
         String redirectCode = UUID.randomUUID().toString();
@@ -76,6 +79,10 @@ public class RedirectHandlerService {
         }
 
         ContextInformation contextInformation = new ContextInformation(UUID.randomUUID());
+
+        PsuConsentSessionResponse response = tokenService.code2Token(contextInformation, redirectCode);
+        PsuConsentSession psuConsentSession = response.getPsuConsentSession();
+        log.info(psuConsentSession.toString());
 
         RequestInfoEntity info = requestInfoService.getRequestInfoByXsrfToken(redirectState);
         SessionEntity sessionEntity = authorizeService.getByXsrfToken(redirectState);

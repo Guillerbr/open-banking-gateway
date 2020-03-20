@@ -63,12 +63,15 @@ class RedirectHandlerServiceTest {
     @Mock
     private RequestInfoEntity requestInfoEntity;
 
+    @Mock
+    private TokenService tokenService;
+
     @InjectMocks
     private RedirectHandlerService redirectHandlerService;
 
     @BeforeEach
     void setup() {
-        redirectHandlerService = new RedirectHandlerService(redirectUrlRepository, authorizeService, accountService, transactionService, requestInfoService);
+        redirectHandlerService = new RedirectHandlerService(redirectUrlRepository, authorizeService, accountService, transactionService, requestInfoService, tokenService);
         redirectHandlerService.setRedirectUrl(REDIRECT_URL);
         redirectHandlerService.setExceptionUrl(EXCEPTION_URL);
     }
