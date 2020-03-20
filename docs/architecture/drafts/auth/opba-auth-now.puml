@@ -1,0 +1,10 @@
+@startuml
+actor PSU
+FinTech --> PSU : 1. Authorize consent URL.\nStore <b>redirectCookie</b> and bind to FinTech URL\nGo to OpenBanking
+PSU --> OpenBanking : 2. Create consent
+OpenBanking -> PSU : 3. Consent created. Redirect back to FinTech
+PSU -> FinTech : 4. Open redirect back URL.\nHere is <b>redirectCookie</b>
+FinTech -> FinTech : 5. Validate <b>redirectCookie</b>
+FinTech -> OpenBanking : 6. Mark consent as active (redirectCode2Token)
+OpenBanking -> OpenBanking : 7. Consent usable
+@enduml
