@@ -2,20 +2,7 @@
 
 echo "Validating DEV deployment"
 
-if [[ "$DISABLE_SMOKE_TESTS"  == "true" ]]; then
-  echo "Smoke tests are swithced off by DISABLE_SMOKE_TESTS variable"
-  exit 0
-fi
-
-if [[ $TRAVIS_REPO_SLUG != "adorsys/open-banking-gateway"
-    || $TRAVIS_PULL_REQUEST != "false"
-    || -z "$TRAVIS_COMMIT" ]];
-then
-  echo "ERROR: Deployment validation not allowed"
-  exit 1
-fi
-
-COMMIT="$TRAVIS_COMMIT"
+COMMIT="cbf916766119f98b672c3834c64a9da289a80944"
 OPBA_URL=https://obg-dev-openbankinggateway.cloud.adorsys.de
 
 echo "Waiting for deployment"

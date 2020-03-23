@@ -12,8 +12,6 @@ jdk:
 script:
   # tests are not done with mvn test - dont know why
   - ./scripts/build_mvn.sh
-  - docker run -it --rm -v "$PWD":/opt/app-root/src -w /opt/app-root/src -u "$(id -u "${USER}"):$(id -g "${USER}")" trion/ng-cli make fintech-ui
-  - docker run -it --rm -v "$PWD":/opt/app-root/src -w /opt/app-root/src -u "$(id -u "${USER}"):$(id -g "${USER}")" trion/ng-cli make consent-ui
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
@@ -52,4 +50,4 @@ deploy:
     skip_cleanup: true
     script: bash scripts/validate_dev_deploy.sh
     on:
-      branch: develop
+      branch: force-selenium-arch-test
